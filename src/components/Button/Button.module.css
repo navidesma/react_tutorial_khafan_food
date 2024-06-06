@@ -1,0 +1,48 @@
+.button {
+    border-radius: 30px;
+    border: none;
+    box-shadow:
+        0 4px 8px 0 rgba(0, 0, 0, 0.2),
+        0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 1rem 0.5rem;
+    transition: box-shadow 0.3s;
+    font-weight: bold;
+    font-family: Vazirmatn;
+    font-size: 1rem;
+    background-color: var(--main-dark-color);
+    color: white;
+    margin: 0 auto;
+}
+
+.button:active {
+    border-radius: 20px;
+    background-color: var(--main-light-color);
+    color: black;
+}
+
+.button:hover {
+    box-shadow: 1px 1px 20px var(--main-dark-color);
+}
+
+.button:disabled {
+    box-shadow: none;
+    background-color: #ccc;
+    color: black;
+}
+
+.contained {
+    background-color: var(--main-dark-color);
+    color: white;
+}
+
+.outlined {
+    border-color: var(--main-dark-color);
+    background-color: inherit;
+    color: black;
+}
+
+@media only screen and (max-width: 600px) {
+    .fullWidthOnMobile {
+        width: 100%;
+    }
+}
