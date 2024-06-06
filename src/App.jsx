@@ -1,5 +1,9 @@
+import FoodCard from "./components/FoodCard/FoodCard";
+
 function App() {
-  return <h1 style={{textAlign: "center"}}>App</h1>;
+  return (
+    <FoodCard/>
+  );
 }
 
 export default App;
