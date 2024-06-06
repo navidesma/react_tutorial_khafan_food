@@ -1,8 +1,11 @@
 import FoodCard from "./components/FoodCard/FoodCard";
+import Main from "./components/Main/Main";
 
 function App() {
   return (
-    <FoodCard/>
+    <Main>
+      <FoodCard />
+    </Main>
   );
 }
 
