@@ -1,12 +1,7 @@
-import FoodCard from "./components/FoodCard/FoodCard";
-import Main from "./components/Main/Main";
+import Home from "./pages/Home/Home";
 
 function App() {
-  return (
-    <Main>
-      <FoodCard />
-    </Main>
-  );
+  return <Home/>;
 }
 
 export default App;
