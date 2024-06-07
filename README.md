@@ -1,15 +1,12 @@
 <div dir="rtl">
 
-# پروژه فصل دوم
-
+# پروژه خفن فود
 
 ## چطوری بخش مورد نظرمون رو دانلود کنیم
 
-1- اول بخش مورد نظرتون رو از طریق کلیک روی branches انتخاب کنید، مثلا اگر می خواید انتهای useState رو ببینید، روی end_of_useState کلیک کنید.
+1- اول بخش مورد نظرتون رو از طریق کلیک روی branches انتخاب کنید، مثلا برای ابتدای پروژه، start رو انتخاب کنید.
 
 2- روی دکمه ی سبز رنگ Code کلیک کنید و بعدش روی Download Zip کلیک کنید.
-
-
 
 ## اگر Git بلد هستم چطوری پروژه رو دانلود کنم؟
 
@@ -17,20 +14,19 @@
 
 ```bash
 
-git clone https://github.com/navidesma/react_tutorial_second_season
+git clone https://github.com/navidesma/react_tutorial_khafan_food
 
 ```
 
-2- برید داخل پوشه ی پروژه، بعدش اگر مثلا میخوام بخش useEffect ببینم:
+2- برید داخل پوشه ی پروژه، بعدش اگر مثلا میخوام ابتدای پروژه رو ببینم:
 
 ```bash
 
-git checkout branch end_of_useEffect
+git checkout branch start
 
 ```
 
 3- اگر بخوام به آخرین تغییرات برگردم
-
 
 ```bash
 
@@ -42,7 +38,6 @@ git checkout main
 
 1- با Powershell یا CMD وارد پوشه ی پروژه بشید
 
-
 دستور زیر رو اجرا کنید:
 
 ```bash
@@ -51,9 +46,7 @@ npm install
 
 ```
 
-
 و بعدش دستور زیر رو بزنید که اجرا بشه:
-
 
 ```bash
 
