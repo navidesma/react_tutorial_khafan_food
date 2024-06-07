@@ -6,7 +6,7 @@ export default function Button(props) {
     className,
     size,
     variant,
-    onCLick,
+    onClick,
     disabled,
     color,
     fullWidthOnMobile,
@@ -26,7 +26,7 @@ export default function Button(props) {
         className
       }
       disabled={disabled}
-      onClick={onCLick}
+      onClick={onClick}
       type={type}
       style={{
         ...style,
