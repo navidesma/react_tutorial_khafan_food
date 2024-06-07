@@ -2,15 +2,18 @@ import styles from "./Navbar.module.css";
 import logo from "../../resources/images/logo.png";
 
 import Button from "../Button/Button";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
     <nav className={styles.navbar}>
       <div className={styles.navbarContainer}>
-        <h1 style={{ marginTop: "0.8rem", marginRight: "1rem" }}>خفن فود</h1>
+        <Link to="/home">
+          <h1 style={{ marginTop: "0.8rem", marginRight: "1rem" }}>خفن فود</h1>
+        </Link>
         <img src={logo} alt="logo" style={{ width: "70px", height: "70px" }} />
         <div style={{ display: "flex", marginLeft: "1rem" }}>
-          <div style={{ display: "flex", marginLeft: "1rem" }}>
+          <Link to="/shopping-cart" style={{ margin: "0.5rem" }}>
             <Button
               size="small"
               variant="outlined"
@@ -18,7 +21,7 @@ export default function Navbar() {
             >
               سبد خرید
             </Button>
-          </div>
+          </Link>
         </div>
       </div>
     </nav>
