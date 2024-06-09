@@ -1,14 +1,16 @@
-import { useState } from "react";
-import AddAndRemoveItemButton from "../../../../components/AddAndRemoveItemButton/AddAndRemoveItemButton"
-import styles from "./OrderCard.module.css"
+import AddAndRemoveItemButton from "../../../../components/AddAndRemoveItemButton/AddAndRemoveItemButton";
+import styles from "./OrderCard.module.css";
+import { foods } from "../../../../foods";
+import { formatMoney } from "../../../../util/formatMoney";
 
-export default function OrderCard() {
-    const [count, setCount] = useState(0);
-    return (
-        <div className={styles.orderCard}>
-            <p className={styles.orderItemName}>عنوان غذا</p>
-            <p className={styles.orderItemPrice}>مبلغ قابل پرداخت</p>
-            <AddAndRemoveItemButton count={count} setCount={setCount} />
-        </div>
-    )
+export default function OrderCard({ id, count }) {
+  const food = foods.find((food) => food.id === id);
+
+  return (
+    <div className={styles.orderCard}>
+      <p className={styles.orderItemName}>{food.name}</p>
+      <p className={styles.orderItemPrice}>{formatMoney(food.price * count)}</p>
+      <AddAndRemoveItemButton id={id} count={count} />
+    </div>
+  );
 }

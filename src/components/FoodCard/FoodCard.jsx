@@ -3,17 +3,12 @@ import styles from "./FoodCard.module.css";
 import { formatMoney } from "../../util/formatMoney";
 import Button from "../Button/Button";
 import AddAndRemoveItemButton from "../../components/AddAndRemoveItemButton/AddAndRemoveItemButton";
+import { useContext } from "react";
+import { AppContext } from "../../appContext";
 
-export default function FoodCard({
-  id,
-  img,
-  name,
-  restaurant,
-  price,
-  cart,
-  addToCart,
-  removeFromCart,
-}) {
+export default function FoodCard({ id, img, name, restaurant, price }) {
+  const { cart, addToCart } = useContext(AppContext);
+
   const item = cart.find((cart) => cart.id === id);
   const count = item ? item.count : 0;
 
@@ -32,12 +27,7 @@ export default function FoodCard({
             سفارش
           </Button>
         ) : (
-          <AddAndRemoveItemButton
-            id={id}
-            count={count}
-            addToCart={addToCart}
-            removeFromCart={removeFromCart}
-          />
+          <AddAndRemoveItemButton id={id} count={count} />
         )}
       </div>
     </div>
