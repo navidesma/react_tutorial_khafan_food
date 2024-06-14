@@ -1,8 +1,25 @@
 import Input from "../../components/Input/Input";
 import styles from "./Payment.module.css";
 import Button from "../../components/Button/Button";
+import { useEffect, useState } from "react";
 
 export default function Payment() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (count > 0) {
+      const decrementCountInterval = setInterval(() => {
+        setCount((prevState) => prevState - 1);
+      }, 1000);
+
+      return () => clearInterval(decrementCountInterval);
+    }
+  }, [count]);
+
+  const handleClickCounter = () => {
+    setCount(120);
+  };
+
   return (
     <form className={styles.container}>
       <h1 style={{ textAlign: "center" }}>مبلغ قابل پرداخت</h1>
@@ -54,8 +71,10 @@ export default function Payment() {
             marginTop: "2rem",
           }}
           type="button"
+          onClick={handleClickCounter}
+          disabled={count > 0}
         >
-          درخواست رمز دوم
+          {count > 0 ? count + " ثانیه" : "درخواست رمز دوم"}
         </Button>
       </div>
       <Button
