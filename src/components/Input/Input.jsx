@@ -12,6 +12,9 @@ export default function Input(props) {
     required,
     dir,
     style,
+    value,
+    onChange,
+    onBlur,
   } = props;
   return (
     <div
@@ -23,6 +26,9 @@ export default function Input(props) {
       </label>
       <br />
       <input
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
         style={style}
         dir={dir}
         required={required}
@@ -55,4 +61,7 @@ Input.propTypes = {
   required: PropTypes.bool,
   dir: PropTypes.string,
   style: PropTypes.object,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func,
 };
