@@ -2,7 +2,17 @@ import styles from "./Input.module.css";
 import PropTypes from "prop-types";
 
 export default function Input(props) {
-  const { label, displayInline, error, errorMessage, className, type } = props;
+  const {
+    label,
+    displayInline,
+    error,
+    errorMessage,
+    className,
+    type,
+    required,
+    dir,
+    style,
+  } = props;
   return (
     <div
       className={styles.inputContainer}
@@ -13,6 +23,9 @@ export default function Input(props) {
       </label>
       <br />
       <input
+        style={style}
+        dir={dir}
+        required={required}
         type={type}
         id={label}
         className={
@@ -39,4 +52,7 @@ Input.propTypes = {
   errorMessage: PropTypes.string,
   className: PropTypes.string,
   type: PropTypes.string.isRequired,
+  required: PropTypes.bool,
+  dir: PropTypes.string,
+  style: PropTypes.object,
 };
