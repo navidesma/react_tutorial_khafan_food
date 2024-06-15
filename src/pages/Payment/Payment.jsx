@@ -2,55 +2,41 @@ import Input from "../../components/Input/Input";
 import styles from "./Payment.module.css";
 import Button from "../../components/Button/Button";
 import { useEffect, useState } from "react";
-
-function validate({ value, minLength, setErrorMessage, required }) {
-  if (required && value === "") {
-    setErrorMessage("این فیلد اجباری است");
-    return;
-  }
-
-  if (minLength && value.length < minLength) {
-    setErrorMessage("تعداد کاراکتر ها حداقل باید" + minLength + " باشد");
-    return;
-  }
-
-  setErrorMessage("");
-}
+import useInputValidator from "../../util/useInputValidator";
 
 export default function Payment() {
-  const [value, setValue] = useState("");
+  const cardNumberInputState = useInputValidator({
+    maxLength: 16,
+    minLength: 16,
+  });
 
-  const maxLength = 16;
-  const minLength = 16;
+  const cvv2InputState = useInputValidator({
+    maxLength: 4,
+    minLength: 3,
+  });
 
-  const required = true;
+  const monthInputState = useInputValidator({
+    maxLength: 2,
+    minLength: 2,
+  });
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const yearInputState = useInputValidator({
+    maxLength: 2,
+    minLength: 2,
+  });
+
+  const passwordInputState = useInputValidator({
+    maxLength: 8,
+    minLength: 4,
+  });
+
+  const emailInputState = useInputValidator({
+    maxLength: 32,
+    minLength: 12,
+    required: false
+  });
 
   const [count, setCount] = useState(0);
-
-  const [validateOnEachKeyPress, setValidateOnEachKeyPress] = useState(false);
-
-  const onChangeHandler = (event) => {
-    const newValue = event.target.value;
-
-    if (validateOnEachKeyPress) {
-      validate({ value: newValue, minLength, required, setErrorMessage });
-    }
-
-    if (maxLength && newValue.length > maxLength) {
-      return;
-    }
-
-    setValue(event.target.value);
-  };
-
-  const onBlurHandler = () => {
-    if (!validateOnEachKeyPress) {
-      setValidateOnEachKeyPress(true);
-    }
-    validate({ value, minLength, required, setErrorMessage });
-  };
 
   useEffect(() => {
     if (count > 0) {
@@ -66,20 +52,21 @@ export default function Payment() {
     setCount(120);
   };
 
+  const formSubmitHandler = (event) => {
+    event.preventDefault();
+
+    console.log("form is submitted")
+  }
+
   return (
-    <form className={styles.container}>
+    <form className={styles.container} onSubmit={formSubmitHandler}>
       <h1 style={{ textAlign: "center" }}>مبلغ قابل پرداخت</h1>
       <Input
         label={"شماره کارت"}
-        required={required}
         dir="ltr"
         type={"number"}
         className={styles.numberInput}
-        value={value}
-        onChange={onChangeHandler}
-        onBlur={onBlurHandler}
-        error={errorMessage !== ""}
-        errorMessage={errorMessage}
+        {...cardNumberInputState.props}
       />
       <Input
         label={"CVV2"}
@@ -88,6 +75,7 @@ export default function Payment() {
         type={"number"}
         style={{ width: "40%" }}
         className={styles.numberInput}
+        {...cvv2InputState.props}
       />
       <h3 style={{ textAlign: "center" }}>تاریخ انقضا:</h3>
       <div className={styles.dateContainer}>
@@ -97,6 +85,7 @@ export default function Payment() {
           dir="ltr"
           type={"number"}
           className={styles.numberInput}
+          {...monthInputState.props}
         />
         <Input
           label={"سال"}
@@ -104,6 +93,7 @@ export default function Payment() {
           dir="ltr"
           type={"number"}
           className={styles.numberInput}
+          {...yearInputState.props}
         />
       </div>
       <div className={styles.passwordContainer}>
@@ -114,6 +104,7 @@ export default function Payment() {
           type={"number"}
           displayInline
           className={styles.numberInput}
+          {...passwordInputState.props}
         />
         <Button
           style={{
@@ -128,7 +119,7 @@ export default function Payment() {
           {count > 0 ? count + " ثانیه" : "درخواست رمز دوم"}
         </Button>
       </div>
-      <Input label={"ایمیل شما: "} dir="ltr" type={"text"} displayInline />
+      <Input label={"ایمیل شما: "} dir="ltr" type={"text"} displayInline {...emailInputState.props} />
       <Button
         color={"green"}
         fullWidthOnMobile
