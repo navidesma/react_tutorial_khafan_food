@@ -8,8 +8,7 @@ import { formatMoney } from "../../util/formatMoney";
 import { AppContext } from "../../appContext";
 
 export default function Payment() {
-  const { clearCart } = useContext(AppContext);
-
+  const { clearCart, toggleNotification } = useContext(AppContext);
 
   const cardNumberInputState = useInputValidator({
     maxLength: 16,
@@ -84,8 +83,12 @@ export default function Payment() {
 
     // send data to server
 
-    
     clearCart();
+
+    toggleNotification({
+      type: "success",
+      message: "سفارش شما ثبت شد، زودی براتون میاریم",
+    });
 
     navigate("/home");
   };

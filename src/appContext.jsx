@@ -1,9 +1,21 @@
-import { useState, createContext } from "react";
+import { useState, createContext, useEffect } from "react";
 
 export const AppContext = createContext(null);
 
 export default function AppContextProvider({ children }) {
   const [cart, setCart] = useState([]);
+
+  const [notification, setNotification] = useState(null);
+
+  useEffect(() => {
+    if (notification) {
+      const notificationTimeout = setTimeout(() => {
+        setNotification(null);
+      }, 5000);
+
+      return () => clearTimeout(notificationTimeout);
+    }
+  }, [notification]);
 
   const addToCart = (id) => {
     setCart((prevState) => {
@@ -39,13 +51,25 @@ export default function AppContextProvider({ children }) {
     });
   };
 
+  const toggleNotification = ({ type, message }) => {
+    setNotification({ type, message });
+  };
 
   const clearCart = () => {
     setCart([]);
-  }
+  };
 
   return (
-    <AppContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
+    <AppContext.Provider
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        clearCart,
+        toggleNotification,
+        notification,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );
