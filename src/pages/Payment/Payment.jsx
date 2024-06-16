@@ -33,7 +33,7 @@ export default function Payment() {
   const emailInputState = useInputValidator({
     maxLength: 32,
     minLength: 12,
-    required: false
+    required: false,
   });
 
   const [count, setCount] = useState(0);
@@ -55,8 +55,21 @@ export default function Payment() {
   const formSubmitHandler = (event) => {
     event.preventDefault();
 
-    console.log("form is submitted")
-  }
+    if (
+      !(
+        cardNumberInputState.isValid &&
+        cvv2InputState.isValid &&
+        monthInputState.isValid &&
+        yearInputState.isValid &&
+        passwordInputState.isValid &&
+        emailInputState.isValid
+      )
+    ) {
+      return;
+    }
+
+    console.log("form is valid");
+  };
 
   return (
     <form className={styles.container} onSubmit={formSubmitHandler}>
@@ -119,7 +132,13 @@ export default function Payment() {
           {count > 0 ? count + " ثانیه" : "درخواست رمز دوم"}
         </Button>
       </div>
-      <Input label={"ایمیل شما: "} dir="ltr" type={"text"} displayInline {...emailInputState.props} />
+      <Input
+        label={"ایمیل شما: "}
+        dir="ltr"
+        type={"text"}
+        displayInline
+        {...emailInputState.props}
+      />
       <Button
         color={"green"}
         fullWidthOnMobile
