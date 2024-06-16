@@ -39,8 +39,13 @@ export default function AppContextProvider({ children }) {
     });
   };
 
+
+  const clearCart = () => {
+    setCart([]);
+  }
+
   return (
-    <AppContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <AppContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
       {children}
     </AppContext.Provider>
   );

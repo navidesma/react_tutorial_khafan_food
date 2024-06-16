@@ -1,12 +1,16 @@
 import Input from "../../components/Input/Input";
 import styles from "./Payment.module.css";
 import Button from "../../components/Button/Button";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useInputValidator from "../../util/useInputValidator";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { formatMoney } from "../../util/formatMoney";
+import { AppContext } from "../../appContext";
 
 export default function Payment() {
+  const { clearCart } = useContext(AppContext);
+
+
   const cardNumberInputState = useInputValidator({
     maxLength: 16,
     minLength: 16,
@@ -44,6 +48,8 @@ export default function Payment() {
 
   const amount = searchParams.get("amount") || "0";
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (count > 0) {
       const decrementCountInterval = setInterval(() => {
@@ -75,12 +81,21 @@ export default function Payment() {
     }
 
     console.log("form is valid");
+
+    // send data to server
+
+    
+    clearCart();
+
+    navigate("/home");
   };
 
   return (
     <form className={styles.container} onSubmit={formSubmitHandler}>
-      <h1 style={{ textAlign: "center" }}>مبلغ قابل پرداخت: {formatMoney(amount)}</h1>
-      
+      <h1 style={{ textAlign: "center" }}>
+        مبلغ قابل پرداخت: {formatMoney(amount)}
+      </h1>
+
       <Input
         label={"شماره کارت"}
         dir="ltr"
