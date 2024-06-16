@@ -7,6 +7,8 @@ import { useContext } from "react";
 import { AppContext } from "../../appContext";
 
 import { foods } from "../../foods";
+import { Link } from "react-router-dom";
+import Button from "../../components/Button/Button";
 
 export default function ShoppingCart() {
   const { cart } = useContext(AppContext);
@@ -18,6 +20,8 @@ export default function ShoppingCart() {
     totalCostFromStart += food.price * item.count;
     totalItemCount += item.count;
   });
+
+  const totalCostFinal = totalCostFromStart + 15000;
 
   if (cart.length === 0) {
     return (
@@ -44,13 +48,23 @@ export default function ShoppingCart() {
         </div>
         <div>
           <h3>قابل پرداخت:</h3>
-          <h3>{formatMoney(totalCostFromStart + 15000)}</h3>
+          <h3>{formatMoney(totalCostFinal)}</h3>
         </div>
         <div>
           <h3>تعداد اقلام</h3>
           <h3>{totalItemCount + " عدد"}</h3>
         </div>
       </div>
+      <Link to={`/payment?amount=${totalCostFinal}`}>
+        <Button
+          type={"button"}
+          color={"green"}
+          fullWidthOnMobile
+          style={{ display: "block", padding: "1rem 3rem", marginTop: "1rem" }}
+        >
+          پرداخت
+        </Button>
+      </Link>
     </Main>
   );
 }

@@ -3,6 +3,8 @@ import styles from "./Payment.module.css";
 import Button from "../../components/Button/Button";
 import { useEffect, useState } from "react";
 import useInputValidator from "../../util/useInputValidator";
+import { useSearchParams } from "react-router-dom";
+import { formatMoney } from "../../util/formatMoney";
 
 export default function Payment() {
   const cardNumberInputState = useInputValidator({
@@ -37,6 +39,10 @@ export default function Payment() {
   });
 
   const [count, setCount] = useState(0);
+
+  const [searchParams] = useSearchParams();
+
+  const amount = searchParams.get("amount") || "0";
 
   useEffect(() => {
     if (count > 0) {
@@ -73,7 +79,8 @@ export default function Payment() {
 
   return (
     <form className={styles.container} onSubmit={formSubmitHandler}>
-      <h1 style={{ textAlign: "center" }}>مبلغ قابل پرداخت</h1>
+      <h1 style={{ textAlign: "center" }}>مبلغ قابل پرداخت: {formatMoney(amount)}</h1>
+      
       <Input
         label={"شماره کارت"}
         dir="ltr"
