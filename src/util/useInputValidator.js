@@ -3,22 +3,24 @@ import { useState } from "react";
 function validate({ value, minLength, setErrorMessage, required }) {
   if (required && value === "") {
     setErrorMessage("این فیلد اجباری است");
-    return;
+    return false;
   }
 
   if (minLength && value.length > 0 && value.length < minLength) {
     setErrorMessage("تعداد کاراکتر ها حداقل باید" + minLength + " باشد");
-    return;
+    return false;
   }
 
   setErrorMessage("");
+
+  return true;
 }
 
 export default function useInputValidator({
   required = true,
   minLength,
   maxLength,
-}) {
+} = {}) {
   const [value, setValue] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [validateOnEachKeyPress, setValidateOnEachKeyPress] = useState(false);
@@ -27,12 +29,7 @@ export default function useInputValidator({
     const newValue = event.target.value;
 
     if (validateOnEachKeyPress) {
-      validate({
-        value: newValue,
-        minLength,
-        required,
-        setErrorMessage,
-      });
+      getIsValid();
     }
 
     if (maxLength && newValue.length > maxLength) {
@@ -46,11 +43,22 @@ export default function useInputValidator({
     if (!validateOnEachKeyPress) {
       setValidateOnEachKeyPress(true);
     }
-    validate({ value, minLength, required, setErrorMessage });
+    getIsValid();
+  };
+
+  const getIsValid = () => {
+    return validate({
+      value,
+      minLength,
+      setErrorMessage,
+      required,
+    });
   };
 
   return {
-    isValid: !errorMessage,
+    getIsValid,
+    value,
+    setValue,
     props: {
       required,
       value,

@@ -68,12 +68,12 @@ export default function Payment() {
 
     if (
       !(
-        cardNumberInputState.isValid &&
-        cvv2InputState.isValid &&
-        monthInputState.isValid &&
-        yearInputState.isValid &&
-        passwordInputState.isValid &&
-        emailInputState.isValid
+        cardNumberInputState.getIsValid() &&
+        cvv2InputState.getIsValid() &&
+        monthInputState.getIsValid() &&
+        yearInputState.getIsValid() &&
+        passwordInputState.getIsValid() &&
+        emailInputState.getIsValid()
       )
     ) {
       return;

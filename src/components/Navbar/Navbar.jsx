@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { AppContext } from "../../appContext";
 
 export default function Navbar() {
-  const { cart } = useContext(AppContext);
+  const { cart, clearAuth } = useContext(AppContext);
 
   let count = 0;
 
@@ -21,7 +21,7 @@ export default function Navbar() {
           <h1 style={{ marginTop: "0.8rem", marginRight: "1rem" }}>خفن فود</h1>
         </Link>
         <img src={logo} alt="logo" style={{ width: "70px", height: "70px" }} />
-        <div style={{ display: "flex", marginLeft: "1rem" }}>
+        <div style={{ marginLeft: "1rem", marginTop: "0.7rem" }}>
           <Link to="/shopping-cart" style={{ margin: "0.5rem" }}>
             <Button
               size="small"
@@ -43,6 +43,14 @@ export default function Navbar() {
               )}
             </Button>
           </Link>
+          <Button
+            color={"inherit"}
+            size={"small"}
+            variant={"outlined"}
+            onClick={() => clearAuth()}
+          >
+            خروج
+          </Button>
         </div>
       </div>
     </nav>

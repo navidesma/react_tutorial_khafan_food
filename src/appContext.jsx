@@ -7,6 +7,16 @@ export default function AppContextProvider({ children }) {
 
   const [notification, setNotification] = useState(null);
 
+  const [token, setToken] = useState(localStorage.getItem("token"));
+
+  const isSingedIn = !!token;
+
+  const [userInfo, setUserInfo] = useState(
+    localStorage.getItem("userInfo")
+      ? JSON.parse(localStorage.getItem("userInfo"))
+      : null
+  );
+
   useEffect(() => {
     if (notification) {
       const notificationTimeout = setTimeout(() => {
@@ -59,6 +69,20 @@ export default function AppContextProvider({ children }) {
     setCart([]);
   };
 
+  const signIn = (token, userInfo) => {
+    setToken(token);
+    localStorage.setItem("token", token);
+
+    setUserInfo(userInfo);
+    localStorage.setItem("userInfo", JSON.stringify(userInfo));
+  };
+
+  const clearAuth = () => {
+    setToken(null);
+
+    localStorage.clear();
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -68,6 +92,11 @@ export default function AppContextProvider({ children }) {
         clearCart,
         toggleNotification,
         notification,
+        isSingedIn,
+        token,
+        signIn,
+        userInfo,
+        clearAuth,
       }}
     >
       {children}
