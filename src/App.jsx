@@ -8,6 +8,8 @@ import { useContext } from "react";
 import { AppContext } from "./appContext";
 import SignUp from "./pages/SignUp/SignUp";
 import SignIn from "./pages/SignIn/SignIn";
+import Addresses from "./pages/Addresses/Addresses";
+import ManageAddress from "./pages/ManageAddress/ManageAddress";
 
 function App() {
   const { notification, isSingedIn } = useContext(AppContext);
@@ -21,6 +23,9 @@ function App() {
             <Route path="home" element={<Home />} />
             <Route path="shopping-cart" element={<ShoppingCart />} />
             <Route path="payment" element={<Payment />} />
+            <Route path="addresses" element={<Addresses />} />
+            <Route path="manage-address" element={<ManageAddress />} />
+            <Route path="manage-address/:addressId" element={<ManageAddress />} />
             <Route path="*" element={<NotFound />} />
           </>
         )}
