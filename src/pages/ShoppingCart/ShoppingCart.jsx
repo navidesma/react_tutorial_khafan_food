@@ -3,25 +3,74 @@ import styles from "./ShoppingCart.module.css";
 import Main from "../../components/Main/Main";
 import { formatMoney } from "../../util/formatMoney";
 import OrderCard from "./components/OrderCard/OrderCard";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../appContext";
-
-import { foods } from "../../foods";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button";
+import Select from "../../components/Select/Select";
+import SelectOption from "../../components/Select/SelectOption";
+import AddressComponent from "../../components/AddressComponent/AddressComponent";
+import useSendRequest from "../../util/useSendRequest";
+import useError from "../../util/useError";
 
 export default function ShoppingCart() {
-    const { cart } = useContext(AppContext);
+    const sendRequest = useSendRequest();
+    const navigate = useNavigate();
+    const { cart, clearCart } = useContext(AppContext);
+
+    const [addresses, setAddresses] = useState();
+    const [selectedAddress, setSelectedAddress] = useState();
+
+    const [addressError, setAddressError] = useError();
+
+    useEffect(() => {
+        const send = async () => {
+            const response = await sendRequest("food/address/");
+            if (response.isOk) {
+                setAddresses(response.data);
+            }
+        };
+
+        send();
+    }, []);
 
     let totalItemCount = 0;
     let totalCostFromStart = 0;
-    cart.forEach((item) => {
-        const food = foods.find((food) => food.id === item.id);
-        totalCostFromStart += food.price * item.count;
-        totalItemCount += item.count;
+    cart.forEach((cartItem) => {
+        totalCostFromStart += cartItem.item.price * cartItem.count;
+        totalItemCount += cartItem.count;
     });
 
     const totalCostFinal = totalCostFromStart + 15000;
+
+    const submitOrder = () => {
+        if (!selectedAddress) {
+            setAddressError(true);
+            return;
+        }
+
+        const body = {
+            order_items: cart.map((cartItem) => ({
+                food: cartItem.item.id,
+                count: cartItem.count,
+            })),
+            address: +selectedAddress,
+        };
+
+        const send = async () => {
+            const response = await sendRequest("food/order/submit/", {
+                body,
+                options: { method: "POST" },
+            });
+
+            if (response.isOk) {
+                clearCart();
+                navigate("/home");
+            }
+        };
+
+        send();
+    };
 
     if (cart.length === 0) {
         return (
@@ -31,11 +80,24 @@ export default function ShoppingCart() {
         );
     }
 
+    if (!addresses || addresses.length === 0) {
+        return (
+            <Main>
+                <div className={styles.noAddressContainer}>
+                    <h1>هیچ آدرسی تعریف نشده، حداقل یک آدرس تعریف کنید</h1>
+                    <Link to={"/addresses"}>
+                        <Button>مدیریت آدرس ها</Button>
+                    </Link>
+                </div>
+            </Main>
+        );
+    }
+
     return (
         <Main>
             <div>
-                {cart.map((item) => (
-                    <OrderCard count={item.count} id={item.id} />
+                {cart.map((cartItem) => (
+                    <OrderCard count={cartItem.count} item={cartItem.item} />
                 ))}
             </div>
 
@@ -55,7 +117,33 @@ export default function ShoppingCart() {
                     <h3>{totalItemCount + " عدد"}</h3>
                 </div>
             </div>
-            <Link to={`/payment?amount=${totalCostFinal}`}>
+            {selectedAddress && (
+                <AddressComponent
+                    address={addresses.find((address) => address.id === +selectedAddress)}
+                />
+            )}
+            <Select
+                label={"آدرس"}
+                selectedValue={selectedAddress}
+                setValue={setSelectedAddress}
+                style={{ marginTop: "1rem" }}
+            >
+                <SelectOption value={""}>------</SelectOption>
+                {addresses.map((address) => (
+                    <SelectOption value={address.id} key={address.id}>
+                        {address.title}
+                    </SelectOption>
+                ))}
+            </Select>
+            {addressError && <p style={{ color: "red" }}>آدرس را مشخص کنید</p>}
+            <Button
+                onClick={submitOrder}
+                fullWidthOnMobile
+                style={{ display: "block", padding: "1rem 3rem", marginTop: "1rem" }}
+            >
+                ثبت سفارش
+            </Button>
+            {/* <Link to={`/payment?amount=${totalCostFinal}`}>
                 <Button
                     type={"button"}
                     color={"green"}
@@ -64,7 +152,7 @@ export default function ShoppingCart() {
                 >
                     پرداخت
                 </Button>
-            </Link>
+            </Link> */}
         </Main>
     );
 }

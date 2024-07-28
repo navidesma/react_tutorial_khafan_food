@@ -56,11 +56,7 @@ export default function Home() {
                         {foods.map((food) => (
                             <div className={styles.foodCardItem} key={food.id}>
                                 <FoodCard
-                                    id={food.id}
-                                    name={food.name}
-                                    price={food.price}
-                                    restaurant={food.restaurant_name}
-                                    img={food.image}
+                                    food={food} 
                                 />
                             </div>
                         ))}

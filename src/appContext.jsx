@@ -30,14 +30,14 @@ export default function AppContextProvider({ children }) {
         }
     }, [notification]);
 
-    const addToCart = (id) => {
+    const addToCart = (item) => {
         setCart((prevState) => {
             const newState = JSON.parse(JSON.stringify(prevState));
 
-            const cartItem = newState.find((cart) => cart.id === id);
+            const cartItem = newState.find((cart) => cart.item.id === item.id);
 
             if (!cartItem) {
-                newState.push({ id: id, count: 1 });
+                newState.push({ item, count: 1 });
             } else {
                 cartItem.count = cartItem.count + 1;
             }
@@ -50,10 +50,10 @@ export default function AppContextProvider({ children }) {
         setCart((prevState) => {
             const newState = JSON.parse(JSON.stringify(prevState));
 
-            const cartItem = newState.find((cart) => cart.id === id);
+            const cartItem = newState.find((cart) => cart.item.id === id);
 
             if (cartItem.count === 1) {
-                const filtered = newState.filter((cart) => cart.id !== id);
+                const filtered = newState.filter((cart) => cart.item.id !== id);
 
                 return filtered;
             } else {

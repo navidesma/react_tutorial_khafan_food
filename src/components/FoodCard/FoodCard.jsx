@@ -7,20 +7,21 @@ import { useContext } from "react";
 import { AppContext, UserTypeEnum } from "../../appContext";
 import { Link } from "react-router-dom";
 
-export default function FoodCard({ id, img, name, restaurant, price }) {
+export default function FoodCard({ food }) {
+    const { id, image, name, restaurant_name, price } = food;
     const { cart, addToCart, userInfo } = useContext(AppContext);
 
-    const item = cart.find((cart) => cart.id === id);
-    const count = item ? item.count : 0;
+    const cartItem = cart.find((cart) => cart.item.id === id);
+    const count = cartItem ? cartItem.count : 0;
 
     const isRestaurantUser = userInfo.type === UserTypeEnum.RESTAURANT_OWNER;
 
     return (
         <div className={styles.foodCardContainer}>
-            <img className={styles.image} src={img} alt='' />
+            <img className={styles.image} src={image} alt='' />
             <div className={styles.content}>
                 <h3>{name}</h3>
-                <p>{restaurant}</p>
+                <p>{restaurant_name}</p>
                 <p style={{ fontWeight: "bold" }}>{formatMoney(price)}</p>
                 {isRestaurantUser ? (
                     <Link
@@ -32,11 +33,14 @@ export default function FoodCard({ id, img, name, restaurant, price }) {
                 ) : (
                     <>
                         {count === 0 ? (
-                            <Button style={{ padding: "1rem 2rem" }} onClick={() => addToCart(id)}>
+                            <Button
+                                style={{ padding: "1rem 2rem" }}
+                                onClick={() => addToCart(food)}
+                            >
                                 سفارش
                             </Button>
                         ) : (
-                            <AddAndRemoveItemButton id={id} count={count} />
+                            <AddAndRemoveItemButton item={food} count={count} />
                         )}
                     </>
                 )}
