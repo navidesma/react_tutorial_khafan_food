@@ -8,11 +8,7 @@ import Button from "../../components/Button/Button";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useSendRequest from "../../util/useSendRequest";
-
-const UserTypeEnum = {
-    NORMAL_USER: "NORMAL_USER",
-    RESTAURANT_OWNER: "RESTAURANT_OWNER",
-};
+import { UserTypeEnum } from "../../appContext";
 
 export default function SignUp() {
     const sendRequest = useSendRequest();

@@ -2,6 +2,11 @@ import { useState, createContext, useEffect } from "react";
 
 export const AppContext = createContext(null);
 
+export const UserTypeEnum = {
+    NORMAL_USER: "NORMAL_USER",
+    RESTAURANT_OWNER: "RESTAURANT_OWNER",
+};
+
 export default function AppContextProvider({ children }) {
     const [cart, setCart] = useState([]);
 

@@ -12,6 +12,7 @@ import Addresses from "./pages/Addresses/Addresses";
 import ManageAddress from "./pages/ManageAddress/ManageAddress";
 import Restaurant from "./pages/Restaurant/Restaurant";
 import EditRestaurant from "./pages/Restaurant/EditRestaurant/EditRestaurant";
+import CreateEditFood from "./pages/Restaurant/CreateEditFood/CreateEditFood";
 
 function App() {
     const { notification, isSingedIn } = useContext(AppContext);
@@ -30,6 +31,8 @@ function App() {
                         <Route path='manage-address/:addressId' element={<ManageAddress />} />
                         <Route path='restaurant' element={<Restaurant />} />
                         <Route path='restaurant/edit-restaurant' element={<EditRestaurant />} />
+                        <Route path='restaurant/food' element={<CreateEditFood />} />
+                        <Route path='restaurant/food/:foodId' element={<CreateEditFood />} />
                         <Route path='*' element={<NotFound />} />
                     </>
                 )}
