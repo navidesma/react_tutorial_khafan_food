@@ -113,7 +113,7 @@ export default function ManageAddress() {
                     fullWidthOnMobile
                     style={{ padding: "1rem 2rem", margin: "0 auto", display: "block" }}
                 >
-                   {address ? "ویرایش" : "ایجاد آدرس"}
+                    {address ? "ویرایش" : "ایجاد آدرس"}
                 </Button>
             </form>
         </Main>

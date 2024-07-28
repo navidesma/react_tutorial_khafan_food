@@ -14,39 +14,39 @@ import Restaurant from "./pages/Restaurant/Restaurant";
 import EditRestaurant from "./pages/Restaurant/EditRestaurant/EditRestaurant";
 
 function App() {
-  const { notification, isSingedIn } = useContext(AppContext);
+    const { notification, isSingedIn } = useContext(AppContext);
 
-  return (
-    <>
-      <Routes>
-        {isSingedIn && (
-          <>
-            <Route path="/" element={<Home />} />
-            <Route path="home" element={<Home />} />
-            <Route path="shopping-cart" element={<ShoppingCart />} />
-            <Route path="payment" element={<Payment />} />
-            <Route path="addresses" element={<Addresses />} />
-            <Route path="manage-address" element={<ManageAddress />} />
-            <Route path="manage-address/:addressId" element={<ManageAddress />} />
-            <Route path="restaurant" element={<Restaurant />} />
-            <Route path="restaurant/edit-restaurant" element={<EditRestaurant />} />
-            <Route path="*" element={<NotFound />} />
-          </>
-        )}
+    return (
+        <>
+            <Routes>
+                {isSingedIn && (
+                    <>
+                        <Route path='/' element={<Home />} />
+                        <Route path='home' element={<Home />} />
+                        <Route path='shopping-cart' element={<ShoppingCart />} />
+                        <Route path='payment' element={<Payment />} />
+                        <Route path='addresses' element={<Addresses />} />
+                        <Route path='manage-address' element={<ManageAddress />} />
+                        <Route path='manage-address/:addressId' element={<ManageAddress />} />
+                        <Route path='restaurant' element={<Restaurant />} />
+                        <Route path='restaurant/edit-restaurant' element={<EditRestaurant />} />
+                        <Route path='*' element={<NotFound />} />
+                    </>
+                )}
 
-        {!isSingedIn && (
-          <>
-            <Route path="sign-up" element={<SignUp />} />
-            <Route path="sign-in" element={<SignIn />} />
-            <Route path="*" element={<Navigate to={"/sign-in"} />} />
-          </>
-        )}
-      </Routes>
-      {notification && (
-        <Notification message={notification.message} type={notification.type} />
-      )}
-    </>
-  );
+                {!isSingedIn && (
+                    <>
+                        <Route path='sign-up' element={<SignUp />} />
+                        <Route path='sign-in' element={<SignIn />} />
+                        <Route path='*' element={<Navigate to={"/sign-in"} />} />
+                    </>
+                )}
+            </Routes>
+            {notification && (
+                <Notification message={notification.message} type={notification.type} />
+            )}
+        </>
+    );
 }
 
 export default App;

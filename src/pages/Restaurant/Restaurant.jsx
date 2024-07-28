@@ -17,7 +17,9 @@ export default function Restaurant() {
             if (response.isOk) {
                 setRestaurant(response.data);
                 if (response.data.address) {
-                    const addressResponse = await sendRequest(`food/address/${response.data.address}/`);
+                    const addressResponse = await sendRequest(
+                        `food/address/${response.data.address}/`,
+                    );
                     if (addressResponse.isOk) {
                         setAddress(addressResponse.data);
                     }
